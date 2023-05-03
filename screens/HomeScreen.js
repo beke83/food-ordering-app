@@ -16,7 +16,7 @@ const HomeScreen = () => {
     }, []);
 
     return (
-        <SafeAreaView className="bg-white pt-5">
+        <SafeAreaView className="bg-white pt-8">
             {/* Header*/}
             <View className="flex-row pb-3 items-center mx-4 space-x-2">
                 <Image
@@ -73,9 +73,9 @@ const HomeScreen = () => {
                     title="Offers For You"
                     description="Paid placements from our partners"
                 />
-                <RestaurantCard 
+                {/* <RestaurantCard 
                 imgUrl="https://i8b2m3d9.stackpathcdn.com/wp-content/uploads/2019/07/Take-away-sushi-rolls_3781NM.jpg"
-                />
+                /> */}
             </ScrollView>
         </SafeAreaView>
     )

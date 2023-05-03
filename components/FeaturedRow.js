@@ -1,6 +1,7 @@
 import { View, Text, ScrollView } from 'react-native'
 import React from 'react'
 import { ArrowRightIcon } from 'react-native-heroicons/outline'
+import RestaurantCard from './RestaurantCard'
 
 const FeaturedRow = ({ id, title, description }) => {
     return (
@@ -20,6 +21,54 @@ const FeaturedRow = ({ id, title, description }) => {
                 showsHorizontalScrollIndicator={false}
                 className="pt-4"
             >
+                <RestaurantCard
+                    id={123}
+                    imgUrl="https://i8b2m3d9.stackpathcdn.com/wp-content/uploads/2019/07/Take-away-sushi-rolls_3781NM.jpg"
+                    title="Nandos Sush"
+                    rating={4.5}
+                    genre="Japanese"
+                    address="123 Main st"
+                    short_description="This is a desc"
+                    dishes={[]}
+                    long={20}
+                    lat={0}
+                />
+                <RestaurantCard
+                    id={123}
+                    imgUrl="https://i8b2m3d9.stackpathcdn.com/wp-content/uploads/2019/07/Take-away-sushi-rolls_3781NM.jpg"
+                    title="Nandos Sush"
+                    rating={4.5}
+                    genre="Japanese"
+                    address="123 Main st"
+                    short_description="This is a desc"
+                    dishes={[]}
+                    long={20}
+                    lat={0}
+                />
+                <RestaurantCard
+                    id={123}
+                    imgUrl="https://i8b2m3d9.stackpathcdn.com/wp-content/uploads/2019/07/Take-away-sushi-rolls_3781NM.jpg"
+                    title="Nandos Sush"
+                    rating={4.5}
+                    genre="Japanese"
+                    address="123 Main st"
+                    short_description="This is a desc"
+                    dishes={[]}
+                    long={20}
+                    lat={0}
+                />
+                <RestaurantCard
+                    id={123}
+                    imgUrl="https://i8b2m3d9.stackpathcdn.com/wp-content/uploads/2019/07/Take-away-sushi-rolls_3781NM.jpg"
+                    title="Nandos Sush"
+                    rating={4.5}
+                    genre="Japanese"
+                    address="123 Main st"
+                    short_description="This is a desc"
+                    dishes={[]}
+                    long={20}
+                    lat={0}
+                />
 
             </ScrollView>
 
