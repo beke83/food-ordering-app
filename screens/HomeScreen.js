@@ -1,18 +1,26 @@
 import { useNavigation } from '@react-navigation/native'
-import React, { Component, useLayoutEffect } from 'react'
+import React, { Component, useEffect, useLayoutEffect, useState } from 'react'
 import { SafeAreaView, Text, View, Image, TextInput, ScrollView } from 'react-native'
 import { ChevronDownIcon, UserIcon, MagnifyingGlassIcon, AdjustmentsVerticalIcon } from "react-native-heroicons/outline"
 import Categories from '../components/Categories'
 import FeaturedRow from '../components/FeaturedRow'
 import RestaurantCard from '../components/RestaurantCard'
+import sanityClient from '../sanity'
 
 const HomeScreen = () => {
     const navigation = useNavigation();
+    const [featuredCategories, setFeaturedCategories] = useState([]);
 
+    //is for whyy the UI loads 
     useLayoutEffect(() => {
         navigation.setOptions({
             headerShown: false,
         });
+    }, []);
+
+    useEffect(() => {
+        //fetch 
+        sanityClient.fetch
     }, []);
 
     return (
