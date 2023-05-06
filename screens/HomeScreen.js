@@ -10,6 +10,7 @@ import sanityClient from '../sanity'
 const HomeScreen = () => {
     const navigation = useNavigation();
     const [featuredCategories, setFeaturedCategories] = useState([]);
+    const [cat, setCat] = useState([]);
 
     //is for whyy the UI loads 
     useLayoutEffect(() => {
