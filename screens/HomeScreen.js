@@ -21,8 +21,22 @@ const HomeScreen = () => {
 
     useEffect(() => {
         //fetch 
-        sanityClient.fetch
+        sanityClient.fetch(
+            `
+            *[_type == "featured] {
+                ...,
+                restaurants[]->{
+                    ...,
+                    dishes[]->
+                }
+            }
+        `
+        ).then(data => {
+            setFeaturedCategories(data);
+        })
     }, []);
+
+    console.log(featuredCategories);
 
     return (
         <SafeAreaView className="bg-white pt-8">
