@@ -1,8 +1,20 @@
 import { View, Text, ScrollView } from 'react-native'
-import React from 'react'
-import CategoryCard from './CategoryCard'
+import React, { useState, useEffect } from 'react'
+import CategoryCard from './CategoryCard';
+import sanityClient, { urlFor } from '../sanity'
 
 const Categories = () => {
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        sanityClient.fetch(`
+            *[_type == "category"]
+        `).then((data) => {
+            setCategories(data);
+        })
+    }, [])
+
+
     return (
         <ScrollView
             contentContainerStyle={{
@@ -13,26 +25,13 @@ const Categories = () => {
             showsHorizontalScrollIndicator
         >
             {/*CATEGORY CARD */}
-            <CategoryCard
-                imgUrl='https://i8b2m3d9.stackpathcdn.com/wp-content/uploads/2019/07/Take-away-sushi-rolls_3781NM.jpg'
-                title="Tesing1"
-            />
-            <CategoryCard
-                imgUrl='https://i8b2m3d9.stackpathcdn.com/wp-content/uploads/2019/07/Take-away-sushi-rolls_3781NM.jpg'
-                title="Tesing2"
-            />
-            <CategoryCard
-                imgUrl='https://i8b2m3d9.stackpathcdn.com/wp-content/uploads/2019/07/Take-away-sushi-rolls_3781NM.jpg'
-                title="Testing3"
-            />
-            <CategoryCard
-                imgUrl='https://i8b2m3d9.stackpathcdn.com/wp-content/uploads/2019/07/Take-away-sushi-rolls_3781NM.jpg'
-                title="Testing3"
-            />
-            <CategoryCard
-                imgUrl='https://i8b2m3d9.stackpathcdn.com/wp-content/uploads/2019/07/Take-away-sushi-rolls_3781NM.jpg'
-                title="Testing3"
-            />
+            {categories.map(category => (
+                <CategoryCard
+                    key={category._id}
+                    imgUrl={urlFor(category.image).width(200).url()}
+                    title={category.name}
+                />
+            ))}
         </ScrollView>
     )
 }

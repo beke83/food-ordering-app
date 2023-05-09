@@ -10,7 +10,7 @@ import 'react-native-url-polyfill/auto';
 
 const HomeScreen = () => {
     const navigation = useNavigation();
-    const [featuredCategories, setFeaturedCategories] = useState([]);
+    const [featuredCategories, setFeaturedCategories] = useState([])
 
     //is for whyy the UI loads 
     useLayoutEffect(() => {
@@ -23,9 +23,15 @@ const HomeScreen = () => {
         //fetch 
         sanityClient.fetch(
             `
-            *[_type == "featured"]
+            *[_type == "featured"] {
+                ...,
+                restaurants[]-> {
+                    ...,
+                    dishes[]->
+                }
+            }
         `
-        ).then(data => {
+        ).then((data) => {
             setFeaturedCategories(data);
         })
     }, []);
@@ -33,7 +39,7 @@ const HomeScreen = () => {
     console.log(featuredCategories);
 
     return (
-        <SafeAreaView className="bg-white pt-8">
+        <SafeAreaView className="bg-white pt-8 pb-8">
             {/* Header*/}
             <View className="flex-row pb-3 items-center mx-4 space-x-2">
                 <Image
@@ -74,22 +80,16 @@ const HomeScreen = () => {
                 <Categories />
 
                 {/*Featured */}
-                <FeaturedRow
-                    id="123"
-                    title="Featured"
-                    description="Paid placements from our partners"
+
+                {featuredCategories?.map((category) => (
+                    <FeaturedRow
+                    key={category._id}
+                    id={category._id}
+                    title={category.name}
+                    description={category.short_description}
 
                 />
-                <FeaturedRow
-                    id="1234"
-                    title="Tasty Discounts"
-                    description="Paid placements from our partners"
-                />
-                <FeaturedRow
-                    id="1235"
-                    title="Offers For You"
-                    description="Paid placements from our partners"
-                />
+                ))}
                 {/* <RestaurantCard 
                 imgUrl="https://i8b2m3d9.stackpathcdn.com/wp-content/uploads/2019/07/Take-away-sushi-rolls_3781NM.jpg"
                 /> */}

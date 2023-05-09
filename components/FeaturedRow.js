@@ -1,9 +1,36 @@
 import { View, Text, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { ArrowRightIcon } from 'react-native-heroicons/outline'
-import RestaurantCard from './RestaurantCard'
+import RestaurantCard from './RestaurantCard';
+import sanityClient from '../sanity';
+import 'react-native-url-polyfill/auto';
 
 const FeaturedRow = ({ id, title, description }) => {
+    const [restaurants, setRestaurants] = useState([]);
+
+    useEffect(() => {
+        //dynamically fetching each resturants by their id which is being passed as props to this component
+        sanityClient.fetch(
+            `
+                *[_type == "featured" && _id == $id] {
+                    ...,
+                    restaurants[]->{
+                        ...,
+                        dishes[]->,
+                        type-> {
+                            name
+                        }
+                    },
+                }[0]
+            `,
+            { id } //this is where we pass in the params which is the id
+            //the [0] above fetches the first restaurant
+        ).then(data => {
+            setRestaurants(data?.restaurants);
+        });
+    }, [id]);
+
+    console.log(restaurants);
     return (
         <View>
             <View className="mt-4 flex-row items-center justify-between px-4">
@@ -21,55 +48,22 @@ const FeaturedRow = ({ id, title, description }) => {
                 showsHorizontalScrollIndicator={false}
                 className="pt-4"
             >
-                <RestaurantCard
-                    id={123}
-                    imgUrl="https://i8b2m3d9.stackpathcdn.com/wp-content/uploads/2019/07/Take-away-sushi-rolls_3781NM.jpg"
-                    title="Nandos Sush"
-                    rating={4.5}
-                    genre="Japanese"
-                    address="123 Main st"
-                    short_description="This is a desc"
-                    dishes={[]}
-                    long={20}
-                    lat={0}
-                />
-                <RestaurantCard
-                    id={123}
-                    imgUrl="https://i8b2m3d9.stackpathcdn.com/wp-content/uploads/2019/07/Take-away-sushi-rolls_3781NM.jpg"
-                    title="Nandos Sush"
-                    rating={4.5}
-                    genre="Japanese"
-                    address="123 Main st"
-                    short_description="This is a desc"
-                    dishes={[]}
-                    long={20}
-                    lat={0}
-                />
-                <RestaurantCard
-                    id={123}
-                    imgUrl="https://i8b2m3d9.stackpathcdn.com/wp-content/uploads/2019/07/Take-away-sushi-rolls_3781NM.jpg"
-                    title="Nandos Sush"
-                    rating={4.5}
-                    genre="Japanese"
-                    address="123 Main st"
-                    short_description="This is a desc"
-                    dishes={[]}
-                    long={20}
-                    lat={0}
-                />
-                <RestaurantCard
-                    id={123}
-                    imgUrl="https://i8b2m3d9.stackpathcdn.com/wp-content/uploads/2019/07/Take-away-sushi-rolls_3781NM.jpg"
-                    title="Nandos Sush"
-                    rating={4.5}
-                    genre="Japanese"
-                    address="123 Main st"
-                    short_description="This is a desc"
-                    dishes={[]}
-                    long={20}
-                    lat={0}
-                />
-
+                {restaurants?.map(restaurant => (
+                    <RestaurantCard
+                        key={restaurant._id}
+                        id={restaurant._id}
+                        imgUrl={restaurant.image}
+                        address={restaurant.address}
+                        title={restaurant.name}
+                        dishes={restaurant.dishes}
+                        rating={restaurant.rating}
+                        short_description={restaurant.short_description}
+                        genre={restaurant.type?.name}
+                        long={restaurant.long}
+                        lat={restaurant.lat}
+                    />
+                ))}
+            
             </ScrollView>
 
         </View>
