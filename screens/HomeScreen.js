@@ -5,12 +5,12 @@ import { ChevronDownIcon, UserIcon, MagnifyingGlassIcon, AdjustmentsVerticalIcon
 import Categories from '../components/Categories'
 import FeaturedRow from '../components/FeaturedRow'
 import RestaurantCard from '../components/RestaurantCard'
-import sanityClient from '../sanity'
+import sanityClient from '../sanity';
+import 'react-native-url-polyfill/auto';
 
 const HomeScreen = () => {
     const navigation = useNavigation();
     const [featuredCategories, setFeaturedCategories] = useState([]);
-    const [cat, setCat] = useState([]);
 
     //is for whyy the UI loads 
     useLayoutEffect(() => {
@@ -23,13 +23,7 @@ const HomeScreen = () => {
         //fetch 
         sanityClient.fetch(
             `
-            *[_type == "featured] {
-                ...,
-                restaurants[]->{
-                    ...,
-                    dishes[]->
-                }
-            }
+            *[_type == "featured"]
         `
         ).then(data => {
             setFeaturedCategories(data);
