@@ -1,0 +1,24 @@
+import { createSlice } from '@reduxjs/toolkit'
+
+
+const initialState = {
+    item: [],
+}
+
+export const basketSlice = createSlice({
+    name: 'basket',
+    initialState,
+    reducers: {
+        addToBasket: (state, action) => {
+            state.value += 1
+        },
+        removeFromBasket: (state) => {
+            state.value -= 1
+        },
+    },
+})
+
+// Action creators are generated for each case reducer function
+export const { addToBasket, removeFromBasket } = basketSlice.actions
+
+export default basketSlice.reducer
