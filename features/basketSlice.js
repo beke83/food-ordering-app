@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-
 const initialState = {
-    item: [],
+    items: [],
 }
 
 export const basketSlice = createSlice({
@@ -10,15 +9,37 @@ export const basketSlice = createSlice({
     initialState,
     reducers: {
         addToBasket: (state, action) => {
-            state.value += 1
+            state.items = [...state.items, action.payload]
         },
-        removeFromBasket: (state) => {
-            state.value -= 1
+        removeFromBasket: (state, action) => {
+            const index = state.items.findIndex((item) => item.id === action.payload.id)
+
+            //create a copy of the basket
+            let newBasket = [...state.items]
+
+            //modify it
+            if (index >= 0) {
+                newBasket.splice(index, 1)
+            }
+            else {
+                console.warn(
+                    `Cant remove product (id: ${action.payload.id}) as its not in the basket!`
+                );
+            }
+
+            //replace the existing basket with the new basket that has been modified
+            state.items = newBasket;
         },
     },
 })
 
 // Action creators are generated for each case reducer function
 export const { addToBasket, removeFromBasket } = basketSlice.actions
+
+
+//selector: used to access the global store and pull the item out from the basket
+export const selectBasketItems = (state) => state.basket.items;
+
+export const selectBasketItemsWithId = (state, id) => state.basket.items.filter((item) => item.id === id)
 
 export default basketSlice.reducer
