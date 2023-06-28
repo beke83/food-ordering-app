@@ -6,10 +6,17 @@ import { selectRestaurant } from '../features/restaurantSlice';
 import { XMarkIcon } from "react-native-heroicons/solid";
 import * as Progress from "react-native-progress";
 import MapView, { Marker } from "react-native-maps";
+import { useEffect } from 'react';
 
 const DeliveryScreen = () => {
     const navigation = useNavigation();
     const restaurant = useSelector(selectRestaurant);
+
+    useEffect(() => {
+        setTimeout(() => {
+            navigation.navigate("Home");
+        }, 20000)
+    }, []);
 
     return (
         <View className='bg-[#00ccbb] flex-1'>

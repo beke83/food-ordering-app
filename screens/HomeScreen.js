@@ -7,6 +7,7 @@ import FeaturedRow from '../components/FeaturedRow'
 import RestaurantCard from '../components/RestaurantCard'
 import sanityClient from '../sanity';
 import 'react-native-url-polyfill/auto';
+//import SkeletonContent from 'react-native-skeleton-content';
 
 const HomeScreen = () => {
     const navigation = useNavigation();
